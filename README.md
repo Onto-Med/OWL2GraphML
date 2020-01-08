@@ -12,7 +12,8 @@ There are two different ways to use this tool. You can add it as a new view to b
 ### Use as Protégé plugin
 
 Download one of our releases and place the JAR file inside the `plugins` directory of Protégé. After restarting Protégé, a new entry "OWL2GraphML" appears in the `Window > Views > Ontology views` context menu.
- 
+
+![Location of plugin in Protégé context menu](images/location_on_protégé_menu.png)
 
 ### Usage in Java application
 
