@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+    <extension id="OWL2GraphML"
+               point="org.protege.editor.core.application.ViewComponent">
+        <label value="OWL2GraphML"/>
+        <class value="de.imise.ontomed.owl2graphml.Owl2GraphmlView"/>
+        <category value="@org.protege.ontologycategory"/>
+    </extension>
+</plugin>
