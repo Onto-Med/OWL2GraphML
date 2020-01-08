@@ -43,7 +43,7 @@ mo.addPropertyDefinitions();              // add property definitions to graph
 
 Write resulting GraphML to file:
 ```java
-mo.toXml()               // create an XML instance
+mo.toXml()                 // create an XML instance
     .writeXML(outputFile); // write XML to the specified file
 ```
 
