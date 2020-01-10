@@ -17,7 +17,15 @@ Download one of our releases and place the JAR file inside the `plugins` directo
 
 ### Usage in Java application
 
-Add OWL2GraphMl as dependency to your project.
+Add OWL2GraphMl as dependency to your project (e.g. as maven dependency in `pom.xml`). OWL2GraphML is available as maven package on https://maven.pkg.github.com.
+
+```xml
+<dependency>
+    <groupId>de.imise.ontomed</groupId>
+    <artifactId>owl2graphml</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
 
 Create an instance of the `MainOntology` class:
 ```java
