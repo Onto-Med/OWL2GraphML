@@ -39,7 +39,7 @@ MainOntology mo = new MainOntology(
 
 Set additional properties to manipulate the resulting GraphML:
 ```java
-mo.addTaxonomy();                         // add taxonomy to graph
+mo.addTaxonomy();                         // add edges between superclass and subclass
 mo.addAnnotations();                      // add annotation properties to graph
 mo.addPropertyRestrictionSuperClasses();  // add superclasses of the property restrictions to the graph
 mo.addEquivalentClasses();                // add equivalent classes to graph

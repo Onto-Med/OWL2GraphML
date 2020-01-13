@@ -42,6 +42,10 @@ import de.imise.ontomed.owl2graphml.graph.node.ManchesterExpressionNode;
 import de.imise.ontomed.owl2graphml.graph.node.Node;
 import de.imise.ontomed.owl2graphml.xml.XML;
 
+/**
+ * Instances of this class provide a method to covert an ontology to GraphML.
+ * There are many properties to manipulate the resulting GraphML. Those properties can be set with respective methods.
+ */
 public class MainOntology extends Ontology {
 	private List<String> ontoIris;
 		
@@ -58,8 +62,17 @@ public class MainOntology extends Ontology {
 	private boolean hasRestrictionSuperClassesWithType;
 
 	private OWLClass startCls;
-	
-	public MainOntology(OWLOntology ontology, String startClassIri, String taxonomyDirection, int taxonomyDepth) {
+
+	/**
+	 * Constructor for instances of this class, which can be configured to manipulate the resulting GraphML.
+	 * @param ontology an OWLOntology instance
+	 * @param startClassIri IRI of a class of the ontology, which will be used as start class
+	 * @param taxonomyDirection specifies the direction to collect classes in the ontology
+	 *                          starting from the selected start class, allowed are "up" and "down"
+	 * @param taxonomyDepth maximum depth for which classes should be included into the graph
+	 * @exception IllegalArgumentException if an unsupported argument was given
+	 */
+	public MainOntology(OWLOntology ontology, String startClassIri, String taxonomyDirection, int taxonomyDepth) throws IllegalArgumentException {
 		super(ontology);
 		
 		Node.idCount = 0;
@@ -82,54 +95,26 @@ public class MainOntology extends Ontology {
 		setSelectedTaxonomyPart();
 	}
 
+	/**
+	 * Collects all unique nodes of the resulting graph.
+	 * @return Collection of unique nodes in the graph.
+	 */
 	public Collection<Node> getNodes() {
 		nonUniqueNodes.addAll(uniqueNodes.values());
 		return nonUniqueNodes;
 	}
-	
+
+	/**
+	 * Collects all edges in the resulting graph.
+	 * @return List of edges in the graph.
+	 */
 	public ArrayList<Edge> getEdges() {
 		return edges;
 	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
 
-	private void setSelectedTaxonomyPart() {
-		selectedClasses = new HashSet<>();
-		selectedClasses.add(startCls);
-		selectedTaxonomyPart = HashMultimap.create();
-		
-		if ("Up".equals(taxonomyDirection))
-			addSuperClasses(startCls, 0, taxonomyDepth);
-		else
-			addSubClasses(startCls, 0, taxonomyDepth);
-	}
-	
-	private void addSubClasses(OWLClass cls, int index, int depth) {
-		if (depth != -1 && index == depth)
-			return;
-		index++;
-		for (OWLClassExpression subClsExp : getSubClasses(cls, false)) {
-			OWLClass subCls = subClsExp.asOWLClass();
-			selectedTaxonomyPart.put(cls, subCls);
-			selectedClasses.add(subCls);
-			addSubClasses(subCls, index, depth);
-		}
-	}
-	
-	private void addSuperClasses(OWLClass cls, int index, int depth) {
-		if (depth != -1 && index == depth)
-			return;
-		index++;
-		for (OWLClassExpression superClsExp : getSuperClasses(cls, false)) {
-			OWLClass superCls = superClsExp.asOWLClass();
-			selectedTaxonomyPart.put(superCls, cls);
-			selectedClasses.add(superCls);
-			addSuperClasses(superCls, index, depth);	
-		}
-	}
-	
-	///////////////////////////////////////////////////////////////////////////////////////////////
-
+	/**
+	 * Adds edges between classes which are in a super-class-sub-class relation.
+	 */
 	@SuppressWarnings("unused")
 	public void addTaxonomy() {
 		for (OWLClass cls : selectedClasses) {
@@ -139,6 +124,9 @@ public class MainOntology extends Ontology {
 		}
 	}
 
+	/**
+	 * Adds annotation properties of classes to the graph.
+	 */
 	@SuppressWarnings("unused")
 	public void addAnnotations() {
 		for (OWLClass cls : selectedClasses) {
@@ -151,6 +139,9 @@ public class MainOntology extends Ontology {
 		}
 	}
 
+	/**
+	 * Adds property restrictions of super classes to the graph.
+	 */
 	@SuppressWarnings("unused")
 	public void addPropertyRestrictionSuperClasses() {
 		for (OWLClass cls : selectedClasses) {
@@ -162,6 +153,10 @@ public class MainOntology extends Ontology {
 		}
 	}
 
+	/**
+	 * Adds edges for anonymous super classes to the graph.
+	 * @param all if true, restrictions will be included too
+	 */
 	@SuppressWarnings("unused")
 	public void addAnonymousSuperClasses(boolean all) {
 		for (OWLClass cls : selectedClasses) {
@@ -172,6 +167,9 @@ public class MainOntology extends Ontology {
 		}
 	}
 
+	/**
+	 * Adds equivalent classes to the graph.
+	 */
 	@SuppressWarnings("unused")
 	public void addEquivalentClasses() {
 		for (OWLClassExpression[] clsExpressions : getEquivalentClasses()) {
@@ -196,6 +194,9 @@ public class MainOntology extends Ontology {
 		}
 	}
 
+	/**
+	 * Adds individuals of the classes to the graph.
+	 */
 	@SuppressWarnings("unused")
 	public void addIndividuals() {
 		for (OWLClass cls : selectedClasses) {
@@ -203,6 +204,9 @@ public class MainOntology extends Ontology {
 		}
 	}
 
+	/**
+	 * Adds types of the individuals to the graph.
+	 */
 	@SuppressWarnings("unused")
 	public void addIndividualTypes() {
 		for (OWLClass cls : selectedClasses) {
@@ -212,6 +216,9 @@ public class MainOntology extends Ontology {
 		}
 	}
 
+	/**
+	 * Adds assertions of the individuals to the graph.
+	 */
 	@SuppressWarnings("unused")
 	public void addIndividualAssertions() {
 		for (OWLClass cls : selectedClasses) {
@@ -234,6 +241,9 @@ public class MainOntology extends Ontology {
 		}
 	}
 
+	/**
+	 * Adds the property definitions of the ontology to the graph.
+	 */
 	@SuppressWarnings("unused")
 	public void addPropertyDefinitions() {
 		for (AnnProp prop : getAnnotationProperties()) {
@@ -252,6 +262,22 @@ public class MainOntology extends Ontology {
 		}
 	}
 
+	/**
+	 * @param hasGreyScale if true, grey scale will be used
+	 */
+	@SuppressWarnings("unused")
+	public void setHasGrayscale(boolean hasGreyScale) {
+		this.hasGrayscale = hasGreyScale;
+	}
+
+	@SuppressWarnings("unused")
+	public void setHasRestrictionSuperClassesWithType(boolean hasRestrictionSuperClassesWithType) {
+		this.hasRestrictionSuperClassesWithType = hasRestrictionSuperClassesWithType;
+	}
+
+	/**
+	 * Constructs an XML instance from the ontology according to set properties.
+	 */
 	@SuppressWarnings("unused")
 	public XML toXml() {
 		XML xml = new XML();
@@ -263,6 +289,43 @@ public class MainOntology extends Ontology {
 	}
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////
+
+	private void setSelectedTaxonomyPart() throws IllegalArgumentException {
+		selectedClasses = new HashSet<>();
+		selectedClasses.add(startCls);
+		selectedTaxonomyPart = HashMultimap.create();
+
+		if ("up".equalsIgnoreCase(taxonomyDirection))
+			addSuperClasses(startCls, 0, taxonomyDepth);
+		else if ("down".equalsIgnoreCase(taxonomyDirection))
+			addSubClasses(startCls, 0, taxonomyDepth);
+		else
+			throw new IllegalArgumentException("the argument 'taxonomyDepth' should be one of 'up' or 'down', '" + taxonomyDirection + "' given");
+	}
+
+	private void addSubClasses(OWLClass cls, int index, int depth) {
+		if (depth != -1 && index == depth)
+			return;
+		index++;
+		for (OWLClassExpression subClsExp : getSubClasses(cls, false)) {
+			OWLClass subCls = subClsExp.asOWLClass();
+			selectedTaxonomyPart.put(cls, subCls);
+			selectedClasses.add(subCls);
+			addSubClasses(subCls, index, depth);
+		}
+	}
+
+	private void addSuperClasses(OWLClass cls, int index, int depth) {
+		if (depth != -1 && index == depth)
+			return;
+		index++;
+		for (OWLClassExpression superClsExp : getSuperClasses(cls, false)) {
+			OWLClass superCls = superClsExp.asOWLClass();
+			selectedTaxonomyPart.put(superCls, cls);
+			selectedClasses.add(superCls);
+			addSuperClasses(superCls, index, depth);
+		}
+	}
 	
 	private int getOntoIndexForOwlEntity(OWLEntity ent) {
 		return ontoIris.indexOf(getOntoIriForOwlEntity(ent));
@@ -309,15 +372,5 @@ public class MainOntology extends Ontology {
 		}
 		
 		return uniqueNodes.get(dt.getIRI().toString());
-	}
-
-	@SuppressWarnings("unused")
-	public void setHasGrayscale(boolean hasGreyScale) {
-		this.hasGrayscale = hasGreyScale;
-	}
-
-	@SuppressWarnings("unused")
-	public void setHasRestrictionSuperClassesWithType(boolean hasRestrictionSuperClassesWithType) {
-		this.hasRestrictionSuperClassesWithType = hasRestrictionSuperClassesWithType;
 	}
 }
