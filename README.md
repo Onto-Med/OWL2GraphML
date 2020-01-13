@@ -23,7 +23,7 @@ Add OWL2GraphMl as dependency to your project (e.g. as maven dependency in `pom.
 <dependency>
     <groupId>de.imise.ontomed</groupId>
     <artifactId>owl2graphml</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
