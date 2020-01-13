@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.imise.ontomed</groupId>
     <artifactId>owl2graphml</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <name>OWL2GraphML</name>
     <description>OWL2GraphML is an API to generate GraphML files from ontologies. It can also be build as Protégé plugin.</description>
 
