@@ -55,6 +55,10 @@ mo.toXml()                 // create an XML instance
     .writeXML(outputFile); // write XML to the specified file
 ```
 
+## See also
+
+* http://docs.yworks.com/yfiles/doc/developers-guide/graphml.html#d0e36470
+
 ## References
 
 *- pending -*
