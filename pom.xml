@@ -3,10 +3,23 @@
     <groupId>de.imise.ontomed</groupId>
     <artifactId>owl2graphml</artifactId>
     <version>1.1.0</version>
+    <packaging>bundle</packaging>
+
     <name>OWL2GraphML</name>
     <description>OWL2GraphML is an API to generate GraphML files from ontologies. It can also be build as Protégé plugin.</description>
+    <url>https://github.com/Onto-Med/OWL2GraphML</url>
 
-    <packaging>bundle</packaging>
+    <licenses>
+        <license>
+            <name>GNU General Public License v3.0</name>
+            <url>https://www.gnu.org/licenses/gpl-3.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/Onto-Med/OWL2GraphML</url>
+    </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
