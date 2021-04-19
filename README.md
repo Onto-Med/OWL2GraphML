@@ -29,11 +29,15 @@ Add OWL2GraphMl as dependency to your project (e.g. as maven dependency in `pom.
 
 Create an instance of the `MainOntology` class:
 ```java
+import de.imise.ontomed.owl2graphml.onto.MainOntology;
+
+// ...
+
 MainOntology mo = new MainOntology(
-	ontology,                            // an OWLOntology instance
-	"https://example.org/example#Thing", // IRI of the class you want to use as root of the graph
-	"down",                              // direction in which classes should be harvested from the ontology (allowed are "up" and "down")
-	5                                    // maximum depth for class harvesting
+  ontology,                            // an OWLOntology instance
+  "https://example.org/example#Thing", // IRI of the class you want to use as root of the graph
+  "down",                              // direction in which classes should be harvested from the ontology (allowed are "up" and "down")
+  5                                    // maximum depth for class harvesting
 );
 ``` 
 
